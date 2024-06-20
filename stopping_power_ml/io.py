@@ -213,15 +213,16 @@ def load_directory(d, prefix="", suffix=".out"):
     # Sort, assign timestep values
     data.sort_values(['file_id', 'frame_id'], ascending=True, inplace=True)
     data['timestep'] = list(range(len(data)))
-
+    
     # Compute displacement
-    data['displacement'] = (data['position'] - data['position'].iloc[0]).apply(np.linalg.norm)
+    positions = np.stack(data['position'].to_numpy(), axis = 0)
+
+    data['displacement'] = np.linalg.norm(positions - positions[0], axis = -1)
 
     # Add tag for the directory
     data['directory'] = d
 
     return data
-
 
 if __name__ == "__main__":
     charge, cell = get_charge_density_interpolator(os.path.join('..', 'datasets', '256_Al', 'Al_semi_core_gs.cube'),
