@@ -229,6 +229,12 @@ class ProjectileVelocity(ProjectileFeaturizer):
 
     def featurize(self, position, velocity):
         return [np.linalg.norm(velocity)]
+
+    def implementors(self):
+        return ['jshek3']
+
+    def citations(self):
+        return []
     
 
 class TimeOffset(ProjectileFeaturizer):
@@ -257,6 +263,11 @@ class TimeOffset(ProjectileFeaturizer):
     def feature_labels(self):
         return ['{} at t={:.2f}'.format(f, t) for t, f in itertools.product(self.offsets,
                                                                            self.featurizer.feature_labels())]
+    def implementors(self):
+        return ['jshek3']
+
+    def citations(self):
+        return []
 
 class TimeAverage(ProjectileFeaturizer):
     """Compute a weighted average of a feature over time
